@@ -23,5 +23,5 @@ function updateCustomerData(){
 updateCustomerData();
 
 function addNewCustomer(){
-
+    
 }
