@@ -1,5 +1,12 @@
-#customerList
+#editableTable
 {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: brown;
+}
+.hidden_id
+{
+    display: none;
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
