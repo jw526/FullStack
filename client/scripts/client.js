@@ -1,20 +1,20 @@
 
-function updateCustomerData(){
+function updateEmployeeData(){
     //fetch to our GET
-    fetch('http://localhost:3333/customer')
+    fetch('http://localhost:3333/employee')
     .then(res=>res.json())
     .then(json=>{
-        //do something
+        
         const divTag = document.querySelector('div#editableTable');
         let html = '<table class="striped"><thead><th>First Name</th><th>LastName</th><th>Email</th><th>Double Click to edit</th></thead><tbody>';
-        for(const cust of json){
+        for(const emp of json){
             html += `
             <tr>
-                <td class="hidden_id">${cust.CustomerId}</td>
-                <td>${cust.FirstName}</td>
-                <td>${cust.LastName}</td>
-                <td>${cust.Email}</td>
-                <td><button class="update">Update</button><button class="delete">Delete</button></td>
+                <td class="hidden_id">${emp.EmployeeId}</td>
+                <td>${emp.FirstName}</td>
+                <td>${emp.LastName}</td>
+                <td>${emp.Email}</td>
+                <td><button class="update">Update</button><button class="delete" value=${emp.EmployeeId}>Delete</button></td>
             </tr>
             `;
             
@@ -22,32 +22,40 @@ function updateCustomerData(){
         }
         divTag.innerHTML = html + '</tbody></table>';
         addEventListeners();
-        // customerData.innerText = JSON.stringify(json);
+        document.querySelector('#employeeTab').click();
+        
     });
 }
-//display customer data on the webpage
-updateCustomerData();
+//display employee data on the webpage
+updateEmployeeData();
 
-document.querySelector('#add').addEventListener('click', addCustomer);
+document.querySelector('#add').addEventListener('click', addEmployee);
 //using form submit instead of button
-// document.querySelector('form').addEventListener('submit', addCustomer);
+
 function addEventListeners()
 {
     const tdTags = document.querySelectorAll('td');
     const updateBtns = document.querySelectorAll('.update');
-    
+    const deleteBtns = document.querySelectorAll('.delete');
+    //edit person info
     for(const tdTag of tdTags){
     
         tdTag.addEventListener('dblclick', editInfo);
     }
+    //update button
     for(const updateBtn of updateBtns){
     
-        updateBtn.addEventListener('click', updateCustomer);
+        updateBtn.addEventListener('click', updateEmployee);
+    }
+    //delete button
+    for(const deleteBtn of deleteBtns){
+    
+        deleteBtn.addEventListener('click', deleteEmployee);
     }
 }
 
 
-function addCustomer(event)
+function addEmployee(event)
 {
     event.preventDefault();
     
@@ -55,9 +63,9 @@ function addCustomer(event)
     const fd = new FormData(document.querySelector('form'));
     
     //post the info to our server
-    fetch('http://localhost:3333/customer',{method:'post', body:fd});
+    fetch('http://localhost:3333/employee',{method:'post', body:fd});
     
-    updateCustomerData();
+    updateEmployeeData();
 
 }
 function editInfo(event)
@@ -67,12 +75,12 @@ function editInfo(event)
     //grad the info from the form
     // alert('hey');
 }
-function updateCustomer(event)
+function updateEmployee(event)
 {
     
     const allTds = event.target.parentElement.parentElement.children;
     let updateJson = {};
-    const custID = allTds[0].textContent;
+    const empID = allTds[0].textContent;
 
     updateJson['FirstName'] = allTds[1].textContent;
     updateJson['LastName'] = allTds[2].textContent;
@@ -80,7 +88,7 @@ function updateCustomer(event)
     
     updateJson = JSON.stringify(updateJson);
     console.dir(updateJson);
-    fetch('http://localhost:3333/customer/'+custID, {
+    fetch('http://localhost:3333/employee/'+empID, {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -88,5 +96,15 @@ function updateCustomer(event)
         method:'put', 
         body:updateJson
     });
-    updateCustomerData();
+    updateEmployeeData();
+}
+
+function deleteEmployee(event)
+{
+    console.log(event);
+
+    fetch('http://localhost:3333/employee/'+event.target.value, {
+        method:'delete', 
+    });
+    updateEmployeeData();
 }

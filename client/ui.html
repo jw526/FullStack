@@ -6,20 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script defer src="./scripts/client.js"></script>
+    <script defer src="./scripts/toggleTab.js"></script>
     <link rel="stylesheet" href="./styles/style.css">
     <!-- <style src="./styles/style.css"></style> -->
 </head>
 <body>
-    <form action="">
+    <!-- Tab links -->
+    <div class="tab">
+        <button class="tablinks" onclick="openCity(event, 'Employee')" id="employeeTab">Employee</button>
+        <button class="tablinks" onclick="openCity(event, 'Customer')">Customer</button>
+        <button class="tablinks" onclick="openCity(event, 'Artist')">Artist</button>
+    </div>
+    
+    <!-- Tab content -->
+    <div id="Employee" class="tabcontent">
+        <h3>Employee Table</h3>
+        <form action="">
         
-        <label for="FirstName">First name:</label> <input type="text" name="FirstName"><br>
-        <label for="LastName">Last name:</label> <input type="text" name="LastName"><br>
-        <label for="Email">Email:</label> <input type="text" name="Email"><br>
-        <button id="add">Add</button>
-    </form>
-    <div id="editableTable">
+            <label for="FirstName">First name:</label> <input type="text" name="FirstName"><br>
+            <label for="LastName">Last name:</label> <input type="text" name="LastName"><br>
+            <label for="Email">Email:</label> <input type="text" name="Email"><br>
+            <button id="add">Add</button>
+        </form>
+        <div id="editableTable">
+            
+        </div>
+    </div>
+    
+    <div id="Customer" class="tabcontent">
+        <h3>Customer Table</h3>
         
     </div>
+    
+    <div id="Artist" class="tabcontent">
+        <h3>Artist Table</h3>
+        
+    </div>
+    
 
 </body>
 </html>
